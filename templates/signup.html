@@ -4,21 +4,23 @@
     <title>Sign Up</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
 </head>
-<body style="background-color: #000012 ; padding-top: 150px">
+<body style="background-color: #000012 ; padding-top: 200px">
     <div class="centered">
 
         <div>
-            <h2 class="subhead">Sign Up</h1>
-            <div style="background-color: #323232; padding: 20px; border-radius: 10px; margin-top: 30px">
+            <!-- <h2 class="subhead" style="font-size: 36px;">Create Account</h1> -->
+            <div style="background-color: #000024; padding: 20px; border-radius: 5px; margin-top: 30px; border: 1px solid #343434; width: 300px">
+                <h2 class="subhead" style="font-size: 38px; margin-top: 5px;">Create account</h1>
                 <form action="{{ url_for('signup') }}" method="post" class="input_form" style="margin: 0px;">
-                    <input type="text" name="username" placeholder="Username" required style="margin: 10px; padding: 15px ">
-                    <input type="email" name="email" placeholder="Email" required style="margin: 10px; padding: 15px ">
-                    <input type="password" name="password" placeholder="Password" required style="margin: 10px; padding: 15px ">
-                    <button type="submit" class="primary" style="margin: 10px; padding: 15px ">Sign Up</button>
+                    <input type="text" name="username" placeholder="Username" required style="margin: 10px; padding: 10px 15px 10px 15px ">
+                    <input type="email" name="email" placeholder="Email" required style="margin: 10px; padding: 10px 15px 10px 15px ">
+                    <input type="password" name="password" placeholder="Password" required style="margin: 10px; padding: 10px 15px 10px 15px ">
+                    <button type="submit" class="primary" style="margin: 10px; padding: 10px 15px 10px 15px ">Sign up</button>
                 </form>
-                <p style="color:white">Already have an account? <a href="{{ url_for('login') }}" id="link-blue" >Log In</a></p>
-                <a href="{{ url_for('index') }}" style="color: #afafaf">cancel</a>    
-            </div>       
+                
+            </div>    
+            <p style="color:white">Already have an account? <a href="{{ url_for('login') }}" id="link-blue" >Log in</a></p>
+            <a href="{{ url_for('index') }}" id="link-blue">cancel</a>       
         </div>
         
     </div>

@@ -4,25 +4,24 @@
     <title>Login</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
 </head>
-<body style="background-color: #000012; padding-top: 150px">
+<body style="background-color: #000012 ; padding-top: 200px">
     <div class="centered">
-
-        <div>
-            <h2 class="subhead">Log In</h1>
+        <div> 
+            <div style="background-color: #000024; padding: 20px; border-radius: 5px; margin-top: 30px; border: 1px solid #343434; width: 300px">
+                <h2 class="subhead" style="font-size: 38px; margin-top: 5px;">Welcome back</h2>
                 {% if error %}
                 <div style="color: red;">
                     {{ error }}
                 </div>
                 {% endif %}
-            <div style="background-color: #323232; padding: 20px; border-radius: 10px; margin-top: 30px">
                 <form action="{{ url_for('login') }}" method="post" class="input_form" style="margin: 0px;">
-                    <input type="text" name="username" placeholder="Username" required style="margin: 10px; padding: 15px ">
-                    <input type="password" name="password" placeholder="Password" required style="margin: 10px; padding: 15px ">
-                    <button type="submit" class="primary" style="margin: 10px; padding: 15px ">Log In</button>
+                    <input type="text" name="username" placeholder="Username" required style="margin: 10px; padding: 10px 15px 10px 15px ">
+                    <input type="password" name="password" placeholder="Password" required style="margin: 10px; padding: 10px 15px 10px 15px ">
+                    <button type="submit" class="primary" style="margin: 10px; padding: 10px 15px 10px 15px">Log in</button>
                 </form>
-                <p style="color:white">Don’t have an account? <a href="{{ url_for('signup') }}" id="link-blue" >Sign Up</a></p>
-                <a href="{{ url_for('index') }}" style="color: #afafaf" >cancel</a>  
-            </div>       
+            </div>    
+            <p style="color:white">Don’t have an account? <a href="{{ url_for('signup') }}" id="link-blue" >Sign up</a></p>
+            <a href="{{ url_for('index') }}" id="link-blue">cancel</a>     
         </div>
 
     </div>

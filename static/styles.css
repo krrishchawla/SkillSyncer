@@ -55,7 +55,7 @@ body {
     width: 100vw;
     height: 100vh;
     overflow: hidden;
-        background-color: green;
+    background-color: green;
 
     
   }
@@ -678,18 +678,20 @@ li {
 }
 
 #link-blue {
-    color: #337aff
+    color: #337aff;
+    text-decoration: none;
+
 }
 #link-blue:hover {
-    color: #000
+    text-decoration: underline;
 }
 
 .dashboard-header {
     background-color: #000012; 
-    margin: 0px; 
+        margin: 0px; 
     padding: 30px;
     border-bottom: 7px solid transparent;
-    border-image: linear-gradient(to right, #337aff, #337aff, #323232, #323232) 1;
+    border-image: linear-gradient(to right, #71a3ff, #337aff, #337aff,  #323232, #323232) 1;
     text-align: left;
 }
 
@@ -716,7 +718,7 @@ li {
     gap:0px; 
     background-color: #fff; 
     width: 305px; 
-    border-radius: 10px; 
+    border-radius: 5px; 
     align-items: center; 
     justify-content: center; 
     border: 1px solid #5a5a5a;
@@ -727,7 +729,7 @@ li {
     padding:10px; 
     background-color: #fff; 
     width: 700px; 
-    border-radius: 15px; 
+    border-radius: 5px; 
     align-items: center; 
     justify-content: space-between; 
     border: 1px solid #5a5a5a;
@@ -740,9 +742,14 @@ li {
     border: none;
     border-radius: 5px;
     font-size: 14px;
+    font-weight: 100;
     margin: 10px 10px 0px 0px;
 }
 
 .logout-button:hover {
     background-color: #3a3a3a;
+}
+
+.button-add {
+    font-size: 16px; padding: 5px 10px; border-radius: 5px; font-weight: 100;
 }

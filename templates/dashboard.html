@@ -9,7 +9,7 @@
             padding: 0;
             font-family: Arial, sans-serif;
             /* background: linear-gradient(to bottom, #000012,#000012, #337aff, #323232);  */
-            background-color: #f0f0f0;
+            background-color: #fbfbfb;
             align-items: center; 
             justify-content: center;
             color: #000; 
@@ -24,20 +24,21 @@
 <body>
     <div style="flex-direction: column; width: 100%;">
         <div class="dashboard-header">
-            <h2 class="subhead" style="font-size: 40px; margin: 0px; display: inline-block;">{{ username.capitalize() }} Admin Dashboard</h2>
+            <h1 class="subhead" style="font-size: 40px; margin: 0px; display: inline-block; font-weight: 100;">{{ username.capitalize() }} </h1>
+            <h1 style="color: #fbfbfb; font-size: 40px; margin: 0px; display: inline-block; font-weight: 100;">&nbspAdmin Dashboard</h1>
             <form action="{{ url_for('logout') }}" method="post" style="float: right;">
                 <button type="submit" class="logout-button">log out</button>
             </form>
         </div>
         <div style="text-align: left; margin: 40px">
             
-            <p style="font-size: 28px; margin-bottom: 10px">{{ date }}</p>
-            <h1>Employees</h1>
+            <p style="font-size: 28px; margin-bottom: 10px; font-weight: 100;">{{ date }}</p>
+            <h2>Employees</h2>
 
                 <form action="{{ url_for('add_employee') }}" method="post" enctype="multipart/form-data" class="box-add-employee" onsubmit="showSpinner()">
                     <p style="margin: 0px 0px 10px 0px; color: #000; font-weight: bold;">Add Employee PDF Resume here</p>
                     <input type="file" name="resume" accept=".pdf">
-                    <button style="font-size: 18px; padding: 5px 10px 5px 10px; border-radius: 5px;" type="submit">+ Add</button>
+                    <button class="button-add" type="submit">+ Add</button>
                     <div id="loading-spinner" style="display: none; margin: 30px 30px 30px 60px">
                         <div class="ring" style="width: 100px; height: 100px; text-align: center;">
                             <div class='ring1' style="border:1px solid #e91c97; border-radius: 25% ;box-shadow: 0 0 5px 0.05px #e91c97 "></div>
@@ -68,14 +69,14 @@
                 </div>  
                 {% endfor %}
             </ul>
-            <h1>Projects</h1>
+            <h2>Projects</h2>
             <div class="box-add-project" style="margin-bottom: 20px;">
                 <form action="{{ url_for('add_project') }}" method="post" enctype="multipart/form-data">
                     <p style="color: #000; font-weight: bold; margin-bottom: 10px;">Add Project Details here</p>
                     <div style="display: flex; align-items: center; padding: 10px;">
                         <input type="text" name="title" placeholder="Project Title" required style="flex-grow: 1; margin-right: 10px; padding: 10px;">
                         <textarea name="description" placeholder="Project Description" required style="flex-grow: 2; margin-right: 10px; padding: 20px;"></textarea>
-                        <button style="font-size: 18px; padding: 5px 10px; border-radius: 5px;" type="submit">+ Add</button>
+                        <button class="button-add" type="submit">+ Add</button>
                     </div>
                 </form>
             </div>
