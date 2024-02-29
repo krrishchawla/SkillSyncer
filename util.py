@@ -19,6 +19,12 @@ def get_employee_embedding(employee):
     return employee_embedding
   return None
 
+def get_embedding_sum(user):
+  if user:
+    embedding_sum = np.fromstring(user.embedding_sum[1:-1], sep=' ')  # Convert the string back to a NumPy array
+    return embedding_sum
+  return None
+
 def get_project_embedding(project):
   if project:
     proj_embedding = np.fromstring(project.embedding[1:-1], sep=' ')  # Convert the string back to a NumPy array

@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
-from util import extract_text_from_pdf, allowed_file, summarize_resume, get_embedding_from_resume, get_embedding_from_project, get_employee_embedding, cos_similarity
+from util import extract_text_from_pdf, allowed_file, summarize_resume, get_embedding_from_resume, get_embedding_from_project, get_employee_embedding, cos_similarity, get_embedding_sum
 from llm import GPT4QAModel
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -13,11 +13,18 @@ app.secret_key = 'your_secret_key'
 
 db = SQLAlchemy(app)
 
+
+#embedding_sum = np.zeros(768)
+#num_embeddings = 0
+
+
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(50), unique=True, nullable=False)
     email = db.Column(db.String(100), nullable=False)
     password = db.Column(db.String(80), nullable=False)
+    embedding_sum = db.Column(db.String(15000)) 
+    num_embeddings = db.Column(db.Integer)
 
 class Employee(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -87,8 +94,10 @@ def signup():
         email = request.form['email']
 
         hashed_password = generate_password_hash(password)  # Default hashing method
-
-        new_user = User(username=username, password=hashed_password, email=email)
+        num_embeddings = 0
+        embedding_sum = np.zeros(768)
+        string_embedding_sum = np.array2string(embedding_sum)
+        new_user = User(username=username, password=hashed_password, email=email, embedding_sum = string_embedding_sum, num_embeddings = num_embeddings)
         db.session.add(new_user)
         db.session.commit()
 
@@ -170,6 +179,11 @@ def add_employee():
             embedding = get_embedding_from_resume(resume_text)
             strembedding = np.array2string(embedding)
             new_employee = Employee(user_id=user.id, name=name, summary=summary, embedding = strembedding, skills=skills, hobbies=hobbies, jobs=jobs)
+            curr_emb_sum = get_embedding_sum(user)
+            new_embedding_sum =  curr_emb_sum + embedding
+            user.embedding_sum = np.array2string(new_embedding_sum)
+            user.num_embeddings += 1
+
             db.session.add(new_employee)
             db.session.commit()
             update_best_employees(new_employee)
@@ -186,8 +200,15 @@ def delete_employee(employee_id):
     if 'username' not in session:
         return redirect(url_for('login'))
 
+    user = User.query.filter_by(username=session['username']).first()
     employee_to_delete = Employee.query.get(employee_id)
     if employee_to_delete:
+        emp_embedding = get_employee_embedding(employee_to_delete)
+        curr_emb_sum = get_embedding_sum(user)
+        new_embedding_sum = curr_emb_sum - emp_embedding
+        user.embedding_sum = np.array2string(new_embedding_sum)
+
+        user.num_embeddings -= 1
         db.session.delete(employee_to_delete)
         db.session.commit()
         flash('Employee deleted successfully')
@@ -225,7 +246,7 @@ def get_5_best_employees_for_project(embedding):
     for employee in user.employees:
         employee_embedding = get_employee_embedding(employee)
         if employee_embedding is not None:
-            similarity = cos_similarity(embedding, employee_embedding)
+            similarity = cos_similarity(embedding - get_embedding_sum(user) / user.num_embeddings, employee_embedding - get_embedding_sum(user) / user.num_embeddings)
             print(employee.name, f'{similarity=}')
             similarity_scores.append((employee, similarity))
             similarity_scores.sort(key=lambda x: x[1], reverse=True)
@@ -285,6 +306,11 @@ def add_project():
         description = request.form.get('description')
         embedding = get_embedding_from_project(description)
         strembedding = np.array2string(embedding)
+        
+        curr_emb_sum = get_embedding_sum(user)
+        new_embedding_sum = curr_emb_sum + embedding
+        user.embedding_sum = np.array2string(new_embedding_sum)
+        user.num_embeddings += 1
         new_project = Project(user_id=user.id, title=title, description=description, embedding=strembedding)
         best_employees = get_5_best_employees_for_project(embedding)
         if len(user.employees) > 0:
