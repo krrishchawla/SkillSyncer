@@ -44,5 +44,5 @@ What I did:
 What I aim to do for next sprint: 
 
 3. Roy Yuan
-What I did: 
-What I aim to do for next sprint: 
+What I did: Incorporated handling for reasoning in project description, strategized for best employee selection, did handling for updating all projects if when new employee added is the best employee (for a project)
+What I aim to do for next sprint: Help with faster model, help with encrypt, anything LLM related, clean up any final pieces so project is presentable
